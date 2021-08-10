@@ -18,3 +18,5 @@
 
 [参考资料](references)
 
+[版权声明](COPYING)
+
