@@ -58,11 +58,8 @@
 ```sql
 
 ​	SELECT * FROM t1 ORDER BY key_part1, key_part2;
-
 ​	SELECT * FROM t1 WHERE key_part1 = constant ORDER BY key_part2;
-
 ​	SELECT * FROM t1 WHERE key_part1 > constant ORDER BY key_part1;
-
 ​	SELECT * FROM t1 WHERE key_part1 = constant1 AND key_part2 > constant2 ORDER BY 	key_part2;
 ```
 
