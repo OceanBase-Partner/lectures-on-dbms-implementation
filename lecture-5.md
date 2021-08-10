@@ -1,4 +1,4 @@
-[上一章](lecture-4)        [Home](README)        [下一章](lecture-6)
+[上一章](lecture-4)        [Home](index)        [下一章](lecture-6)
 
 ## 第5章 查询优化
 
@@ -663,4 +663,4 @@ W为权重因子，表明I/O到CPU的相关性，又称选择率（selectivity�
 
 还有嵌套子查询优化、物化视图等多种优化手段，这里不再展开。
 
-[上一章](lecture-4)        [Home](README)        [下一章](lecture-6)
+[上一章](lecture-4)        [Home](index)        [下一章](lecture-6)

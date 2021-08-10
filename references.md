@@ -1,4 +1,4 @@
-[上一章](lecture-6)  [Home](README)
+[上一章](lecture-6)  [Home](index)
 
 ## 参考资料
 
@@ -9,4 +9,4 @@
 5. [https://15445.courses.cs.cmu.edu/fall2020/schedule.html](https://15445.courses.cs.cmu.edu/fall2020/schedule.html)
 
 
-[上一章](lecture-6)  [Home](README)
+[上一章](lecture-6)  [Home](index)

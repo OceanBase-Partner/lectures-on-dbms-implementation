@@ -1,4 +1,4 @@
-[上一章](lecture-5)        [Home](README)        [下一章](references)
+[上一章](lecture-5)        [Home](index)        [下一章](references)
 
 ## 第6章 事务处理
 
@@ -319,4 +319,4 @@ DBA装入相关备份文件后，系统执行的恢复过程与系统故障的�
 
     
 
-[上一章](lecture-5)        [Home](README)        [下一章](references)
+[上一章](lecture-5)        [Home](index)        [下一章](references)
