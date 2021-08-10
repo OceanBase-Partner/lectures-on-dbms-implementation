@@ -1,3 +1,5 @@
+[上一章](lecture-5)        [Home](README)        [下一章](references)
+
 ## 第6章 事务处理
 
 ## 6.1 事务概念
@@ -316,3 +318,5 @@ DBA装入相关备份文件后，系统执行的恢复过程与系统故障的�
 4. 对UNDO-LIST和REDO-LIST中的每个事务，分别执行UNDO和REDO操作。
 
     
+
+[上一章](lecture-5)        [Home](README)        [下一章](references)

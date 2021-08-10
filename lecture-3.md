@@ -1,3 +1,5 @@
+[上一章](lecture-2)        [Home](README)        [下一章](lecture-4)
+
 ## 第3章 索引结构
 
 ## 3.1 索引结构概述
@@ -277,3 +279,5 @@ B+树的示意图如图3-1所示。树中的每个结点中都包含一个键/�
 <center>(c) 插入散列值为0001的记录后</center>
 
 <center>图3-7 线性散列表举例</center>
+
+[上一章](lecture-2)        [Home](README)        [下一章](lecture-4)
