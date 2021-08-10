@@ -38,7 +38,7 @@
 
 ​												E1⋈E2 ≡ E2⋈E1
 
-​												![5.2.1.1-1](images\5.2.1.1-1.png) ≡ ![5.2.1.1-2](images\5.2.1.1-2.png)
+​												![5.2.1.1-1](images/5.2.1.1-1.png) ≡ ![5.2.1.1-2](images/5.2.1.1-2.png)
 
 对于连接和笛卡尔积运算，可以交换前后位置，其结果不变。例如，两表连接算法中有嵌套循环连接算法，对外表和内表有要求，外表尽可能小则有利于做&quot;基于块的嵌套循环连接&quot;，所以通过交换律可以将元组少的表作为外表。
 
@@ -50,7 +50,7 @@
 
 ​												(E1⋈E2)⋈E3 ≡ E1⋈(E2⋈E3)
 
-​												![5.2.1.1-3](images\5.2.1.1-3.png) ≡ <img src="images\5.2.1.1-4.png" alt="5.2.1.1-4" style="zoom:75%;" />
+​												![5.2.1.1-3](images/5.2.1.1-3.png) ≡ <img src="images/5.2.1.1-4.png" alt="5.2.1.1-4" style="zoom:75%;" />
 
 对于连接、笛卡尔积运算，如果新的结合有利于减少中间关系的大小，则可以优先处理。
 
@@ -370,7 +370,7 @@ outer_expr = any (select inner_expr from ... where subquery_where)
 
 <center>表5-4 IN类型子查询优化的几种情况</center>
 
-![5.2.2.1-1](images\5.2.2.1-1.png)
+![5.2.2.1-1](images/5.2.2.1-1.png)
 
 情况一：outer\_expr和inner\_expr均为非NULL值。
 
@@ -564,7 +564,7 @@ W为权重因子，表明I/O到CPU的相关性，又称选择率（selectivity�
 
 多表间的连接顺序表示了查询计划树的基本形态。在1990年，Schneder等人在研究查询树模型时提出了左深树，右深树和紧密树3种形态，如图5-1所示。
 
-<img src="images\5-1.png" alt="图5-1 三种树的形态" style="zoom: 100%;" />
+<img src="images/5-1.png" alt="图5-1 三种树的形态" style="zoom: 100%;" />
 
 <center>图5-1 三种树的形态</center>
 
