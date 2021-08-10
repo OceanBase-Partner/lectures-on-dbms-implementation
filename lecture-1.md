@@ -1,4 +1,4 @@
- [Home](README)        [下一章](lecture-2)
+ [Home](index)        [下一章](lecture-2)
 
 
 
@@ -147,4 +147,4 @@ WHERE 学生.学号=选课.学号 AND 课号=2 ;
 
 这三个表达式的计算代价差异巨大，而DBMS的一个重要任务就是通过查询优化处理找到其中代价最小的那一个。SQL采用的这种非过程化语言形式，既简化了用户的表达，又为DBMS优化查询语句的执行性能提供了巨大的灵活性。
 
- [Home](README)        [下一章](lecture-2)
+ [Home](index)        [下一章](lecture-2)
