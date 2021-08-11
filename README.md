@@ -19,3 +19,5 @@
 [参考资料](references)
 
 [miniob 赛题](miniob-topics)
+
+[版权声明](COPYING)
