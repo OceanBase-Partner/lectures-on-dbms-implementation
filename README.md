@@ -20,4 +20,4 @@
 
 [miniob 赛题](miniob-topics)
 
-[版权声明](COPYING)
+[版权声明](copyright)
