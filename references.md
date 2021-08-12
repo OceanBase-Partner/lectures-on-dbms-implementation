@@ -1,6 +1,6 @@
 [上一章](lecture-6)  [Home](index)
 
-## 参考资料
+# 参考资料
 
 1. 王珊, 萨师煊. 数据库系统概论(第5版). 北京: 高等教育出版社, 2014
 2. Hector Garcia-Mlina, Jeffrey D. Ullman, Jennifer Widom. 杨冬青 等译. 数据库系统实现. 北京: 机械工业出版社, 2010
