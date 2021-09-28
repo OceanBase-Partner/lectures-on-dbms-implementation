@@ -4,22 +4,22 @@
 
 
 
-[第1章 数据库管理系统概述](lecture-1)
+[第1章 数据库管理系统概述](./lecture-1.md)
 
-[第2章 数据库的存储结构](lecture-2)
+[第2章 数据库的存储结构](./lecture-2.md)
 
-[第3章 索引结构](lecture-3)
+[第3章 索引结构](./lecture-3.md)
 
-[第4章 查询处理](lecture-4)
+[第4章 查询处理](./lecture-4.md)
 
-[第5章 查询优化](lecture-5)
+[第5章 查询优化](./lecture-5.md)
 
-[第6章 事务处理](lecture-6)
+[第6章 事务处理](./lecture-6.md)
 
-[参考资料](references)
+[参考资料](./references.md)
 
-[miniob 赛题](miniob-topics)
+[miniob 赛题](./miniob-topics.md)
 
-[miniob 测试环境说明](miniob-test-env)
+[miniob 测试环境说明](./miniob-test-env.md)
 
-[版权声明](copyright)
+[版权声明](./copyright.md)
