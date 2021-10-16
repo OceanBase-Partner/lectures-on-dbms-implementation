@@ -18,8 +18,11 @@
 
 [参考资料](references)
 
+[miniob 介绍和OceanBase 比赛相关约束介绍](miniob-introduction)
+
 [miniob 赛题](miniob-topics)
 
 [miniob 测试环境说明](miniob-test-env)
 
 [版权声明](copyright)
+
