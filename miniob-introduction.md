@@ -7,16 +7,28 @@ miniob设计的目标是让不熟悉数据库设计和实现的同学能够快�
 
 ## miniob结构
 miniob作为一个具有“基本”功能的数据库，包含了需要的基本功能模块。包括
+
 ● 网络模块：负责与客户端交互，收发客户端请求与应答；
+
 ● SQL解析：将用户输入的SQL语句解析成语法树；
+
 ● 执行计划缓存：执行计划缓存模块会将该 SQL第一次生成的执行计划缓存在内存中，后续的执行可以反复执行这个计划，避免了重复查询优化的过程（未实现）。
+
 ● 语义解析模块：将生成的语法树，转换成数据库内部数据结构（未实现）；
+
 ● 查询缓存：将执行的查询结果缓存在内存中，下次查询时，可以直接返回（未实现）；
+
 ● 查询优化：根据一定规则和统计数据，调整/重写语法树。当前实现为空，留作实验题目；
+
 ● 计划执行：根据语法树描述，执行并生成结果；
+
 ● 会话管理：管理用户连接、调整某个连接的参数；
+
 ● 元数据管理：记录当前的数据库、表、字段和索引元数据信息；
+
 ● 客户端：作为测试工具，接收用户请求，向服务端发起请求。
+
+
 
 SQL的执行流程可以参考 [SQL 请求执行流程](https://open.oceanbase.com/docs/community/oceanbase-database/V3.1.0/sql-request-execution-process-1)。
 
@@ -29,14 +41,23 @@ SEDA全称是：stage event driver architecture，它旨在结合事件驱动和
 
 ### 服务端启动过程
 虽然代码是模块化的，并且面向对象设计思想如此流行，但是很多同学还是喜欢从main函数看起。那么就先介绍一下服务端的启动流程。
+
 main函数参考 main@src/observer/main.cpp。启动流程大致如下：
+
 解析命令行参数 parse_parameter@src/observer/main.cpp
+
 加载配置文件    Ini::load@deps/common/conf/ini.cpp
+
 初始化日志       init_log@src/observer/init.cpp
+
 初始化seda      init_seda@src/observer/init.cpp
+
 初始化网络服务 init_server@src/observer/main.cpp
+
 启动网络服务    Server::serve@src/net/server.cpp
+
 建议把精力更多的留在核心模块上，以更快的了解数据库的工作。
+
 
 ### 网络模块
 网络模块代码参考src/observer/net，主要是Server类。
@@ -57,21 +78,35 @@ NOTE：在查询相关的地方，都是用关键字relation、attribute，而�
 
 ### seda编程注意事项
 seda使用异步事件的方式，在线程池中调度。每个事件(event)，再每个阶段完成处理后，都必须调用done接口。比如 
+
 ● event->done(); // seda异步调用event的善后处理
+
 ● event->done_immediate(); // seda将直接在当前线程做event的删除处理
+
 ● event->done_timeout(); // 一般不使用
+
 当前Miniob为了方便和简化，都执行event->done_immediate。
+
 在event完成之后，seda会调用event的回调函数。通过 event->push_callback 放置回调函数，在event完成后，会按照push_callback的反向顺序调用回调函数。
 注意，如果执行某条命令后，长时间没有返回结果，通过pstack也无法找到执行那条命令的栈信息，就需要检查下，是否有event没有调用done操作。
 当前的几种event流程介绍：
+
 recv@server.cpp接收到用户请求时创建SessionEvent并交给SessionStage
+
 SessionStage处理SessionEvent并创建SQLStageEvent，流转->
+
 ResolveStage 流转 SQLStageEvent ->
+
 QueryCacheStage 流转 SQLStageEvent ->
+
 PlanCacheStage 流转 SQLStageEvent ->
+
 ParseStage 处理 SQLStageEvent  并创建 ExecutionPlanEvent，流转到->
+
 OptimizeStage 流转 ExecutionPlanEvent ->
+
 ExecuteStage 处理 ExecutionPlanEvent 并创建 StorageEvent，流转到->
+
 DefaultStorageStage 处理 StorageEvent
 
 ### 元数据管理模块
@@ -89,30 +124,38 @@ miniob采用TCP通信，纯文本模式，使用'\0'作为每个消息的终结�
 在做miniob的题目时，不要做一个题目再看下一个题目，团队中多个同学分别做自己的题目时，也不要一直单独作战，因为完成课题时，需要修改的模块会有非常多的重叠，因此建议团队尽量统筹规划，避免代码冲突以及“越走越难”。
 
 # 参考
-《数据库系统实现》
-《数据库系统概念》
-《flex_bison》  flex/bison手册
-[flex开源源码](https://github.com/westes/flex)
-[bison首页](https://www.gnu.org/software/bison/)
-[cmake官方手册](https://cmake.org/)
-[libevent官网](https://libevent.org/)
-[SEDA wiki百科](https://en.wikipedia.org/wiki/Staged_event-driven_architecture)
-[OceanBase数据库文档](https://www.oceanbase.com/docs)
-[OceanBase开源网站](https://github.com/oceanbase/oceanbase)
+- 《数据库系统实现》
+- 《数据库系统概念》
+- 《flex_bison》  flex/bison手册
+- [flex开源源码](https://github.com/westes/flex)
+- [bison首页](https://www.gnu.org/software/bison/)
+- [cmake官方手册](https://cmake.org/)
+- [libevent官网](https://libevent.org/)
+- [SEDA wiki百科](https://en.wikipedia.org/wiki/Staged_event-driven_architecture)
+- [OceanBase数据库文档](https://www.oceanbase.com/docs)
+- [OceanBase开源网站](https://github.com/oceanbase/oceanbase)
 
 # 附录-编译安装测试
 ## 编译环境
 miniob使用cmake管理，要求cmake版本至少3.14，编译的C++标准是C++14，所以使用的编译器需要支持C++14。
+
 编译器推荐使用gcc或clang，使用Windows操作系统的同学，建议使用Linux虚拟机或docker编译，程序会最终在Linux操作系统上测试。
+
+使用MacOS的同学，注意默认编译器是clang，即使使用命令gcc，实际编译器可能也是clang。
+
+NOTE：clang编译器有些表现与gcc不一致，官方测试后台使用gcc，如果后续测试出现编译错误，可以更换为gcc测试。
 
 ## 编译
 参考源码中  docs/how_to_build.md 文件。
 如文件中描述，miniob依赖下面几个模块，可以参考文件提前安装：
+
 ● libevent
+
 ● googletest
+
 ● jsoncpp
 
-依赖安装完成后，参考how_to_build.md中最后一步，编译miniob。创建build目录，在build目录中执行命令cmake ..，然后执行make -j4，如果编译DEBUG版本，执行cmake -DDEBUG ..，注意，在提交代码前，最好用非DEBUG模式测试一下，因为测试环境中将使用非DEBUG模式。编译结果保存在build目录中，observer/obclient可执行程序会在build/bin目录下生成。
+依赖安装完成后，参考how_to_build.md中最后一步，编译miniob。创建build目录，在build目录中执行命令cmake ..，然后执行make -j4，如果编译DEBUG版本，执行cmake -DDEBUG=ON ..，注意，在提交代码前，最好用非DEBUG模式测试一下，因为测试环境中将使用非DEBUG模式。编译结果保存在build目录中，observer/obclient可执行程序会在build/bin目录下生成。
 NOTE: make -j4将开启4个并发来编译代码，如果你的机器CPU和内存比较多，可以使用更大的参数。
 
 ## 运行服务端
