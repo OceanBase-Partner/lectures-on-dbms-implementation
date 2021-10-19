@@ -186,7 +186,7 @@ obclient [ip] [port]
 
 词法分析代码lex_sql.l使用下面的命令生成C代码：
 
-flex lex_sql.l
+flex --header-file=lex.yy.h lex_sql.l
 
 生成 lex.yy.c和lex.yy.h文件。
 
