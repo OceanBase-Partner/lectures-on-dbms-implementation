@@ -24,5 +24,7 @@
 
 [miniob 测试环境说明](miniob-test-env)
 
+[OceanBase 大赛 github 操作手把手](miniob-github-step-by-step.md)
+
 [版权声明](copyright)
 
