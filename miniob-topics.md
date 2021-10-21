@@ -73,6 +73,8 @@ date不需要考虑和string(char)做对比。比如 select * from t where d > '
 
 date也不会用来计算平均值。
 
+select * form t where d=’2021-02-30‘； 这种场景在mysql下面是返回空数据集，但是我们现在约定都返回 FAILURE。
+
 > 温馨提示：date 可以使用整数存储，简化处理
 
 - 浮点数展示问题
