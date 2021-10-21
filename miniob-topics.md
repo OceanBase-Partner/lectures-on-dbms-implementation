@@ -68,7 +68,9 @@
 - date 测试
 
 date测试需要注意校验日期有效性。比如输入"2021-2-31"，一个非法的日期，应该返回"FAILURE"。
-date不需要考虑和string(char)做对比。
+
+date不需要考虑和string(char)做对比。比如 select * from t where d > '123'; select * from t where d < 'abc'; 不会测试这种场景。但是需要考虑日期与日期的比较，比如select * from t where d > '2021-01-21';。
+
 date也不会用来计算平均值。
 
 > 温馨提示：date 可以使用整数存储，简化处理
