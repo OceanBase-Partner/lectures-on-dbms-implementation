@@ -9,17 +9,19 @@
 
 预选赛，题目分为两类，一类必做题，一类选做题。选做题按照实现的功能计分。
 
+计分规则：必做题和选做题都有分数。但是必做题做完后，选做题的分数才会进行累计。
+
 ## 必做题
 
-| 名称 | 描述 | 测试用例示例 |
-| ---- | ---- | -------------|
-| 优化buffer pool | 必做。实现LRU淘汰算法或其它淘汰算法 | |
-| 查询元数据校验 | 必做。查询语句中存在不存在的列名、表名等，需要返回失败。需要检查代码，判断是否需要返回错误的地方都返回错误了。 |create table t(id int, age int);<br/>select * from t where name='a'; <br/>select address from t where id=1;<br/>select * from t_1000;|
-| drop table | 必做。删除表。清除表相关的资源。 |create table t(id int, age int);<br/>create table t(id int, name char);<br/>drop table t;<br/>create table t(id int, name char);|
-| 实现update功能 | 必做。update单个字段即可。 |update t set age =100 where id=2;<br/>update set age=20 where id>100;|
-| 增加date字段 | 必做。date测试不会超过2038年2月。注意处理非法的date输入，需要返回FAILURE。 |create table t(id int, birthday date);<br/>insert into t values(1, '2020-09-10');<br/>insert into t values(2, '2021-1-2');<br/>select * from t;|
-| 多表查询 | 必做。支持多张表的笛卡尔积关联查询。需要实现select * from t1,t2; select t1.*,t2.* from t1,t2;以及select t1.id,t2.id from t1,t2;查询可能会带条件。查询结果展示格式参考单表查询。每一列必须带有表信息，比如:<br/>t1.id \|  t2.id <br/>1 \| 1 |select * from t1,t2;<br/>select * from t1,t2 where t1.id=t2.id and t1.age > 10;<br/>select * from t1,t2,t3;|
-| 聚合运算 | 需要实现max/min/count/avg.<br/>包含聚合字段时，只会出现聚合字段。聚合函数中的参数不会是表达式，比如age +1 |select max(age) from t1; select count(*) from t1; select count(1) from t1; select count(id) from t1;|
+| 名称 | 分值 | 描述 | 测试用例示例 |
+| ---- | -- | ---- | -------------|
+| 优化buffer pool | 10 | 必做。实现LRU淘汰算法或其它淘汰算法 | |
+| 查询元数据校验 | 10 | 必做。查询语句中存在不存在的列名、表名等，需要返回失败。需要检查代码，判断是否需要返回错误的地方都返回错误了。 |create table t(id int, age int);<br/>select * from t where name='a'; <br/>select address from t where id=1;<br/>select * from t_1000;|
+| drop table | 10 | 必做。删除表。清除表相关的资源。 |create table t(id int, age int);<br/>create table t(id int, name char);<br/>drop table t;<br/>create table t(id int, name char);|
+| 实现update功能 | 10 | 必做。update单个字段即可。 |update t set age =100 where id=2;<br/>update set age=20 where id>100;|
+| 增加date字段 | 10 | 必做。date测试不会超过2038年2月。注意处理非法的date输入，需要返回FAILURE。 |create table t(id int, birthday date);<br/>insert into t values(1, '2020-09-10');<br/>insert into t values(2, '2021-1-2');<br/>select * from t;|
+| 多表查询  | 10 | 必做。支持多张表的笛卡尔积关联查询。需要实现select * from t1,t2; select t1.\*,t2.\* from t1,t2;以及select t1.id,t2.id from t1,t2;查询可能会带条件。查询结果展示格式参考单表查询。每一列必须带有表信息，比如:<br/>t1.id \|  t2.id <br/>1 \| 1 |select * from t1,t2;<br/>select * from t1,t2 where t1.id=t2.id and t1.age > 10;<br/>select * from t1,t2,t3;|
+| 聚合运算 | 10 | 需要实现max/min/count/avg.<br/>包含聚合字段时，只会出现聚合字段。聚合函数中的参数不会是表达式，比如age +1 |select max(age) from t1; select count(*) from t1; select count(1) from t1; select count(id) from t1;|
 
 
 
@@ -30,7 +32,7 @@
 | 多表join操作       | 20   | INNER JOIN。需要支持join多张表。需要考虑大表问题，不要直接使用笛卡尔积再过滤 | select * from t1 inner join t2 on t1.id=t2.id;<br/>select * from t1 inner join t2 on t1.id=t2.id inner join t3 on t1.id=t3.id;<br/>selec * from t1 inner join t2 on t1.id=t2.id and t2.age>10 where t1.name >='a'; |
 | 一次插入多条数据   | 10   | 一次插入的数据要同时成功或失败。                             | insert into t1 values(1,1),(2,2),(3,3);                      |
 | 唯一索引           | 10   | 唯一索引：create unique index                                | create unique index i_id on t1(id);<br/>insert into t1 values(1,1);<br/>insert into t1 values(1,2); -- failed |
-| 支持NULL类型       | 10   | 包括但不限于建表、查询和插入。默认情况不允许为NULL，使用nullable关键字表示字段允许为NULL。<br/>Null不区分大小写 | create table t1 (id int not null, age int not null, address nullable); create table t1 (id int, age int, address char nullable); insert into t1 values(1,1, null); |
+| 支持NULL类型       | 10   | 包括但不限于建表、查询和插入。默认情况不允许为NULL，使用nullable关键字表示字段允许为NULL。<br/>Null不区分大小写。<br/>注意NULL字段的对比规则是NULL与**任何** 数据对比，都是FALSE。 | create table t1 (id int not null, age int not null, address nullable); create table t1 (id int, age int, address char nullable); insert into t1 values(1,1, null); |
 | 简单子查询         | 10   | 支持简单的IN(NOT IN)语句；<br/>支持与子查询结果做比较运算；<br/>支持子查询中带聚合函数。<br/>子查询中不会与主查询做关联。 | select * from t1 where name in(select name from t2);<br/>select * from t1 where t1.age >(select max(t2.age) from t2);<br/>select * from t1 where t1.age > (select avg(t2.age) from t2) and t1.age > 20.0; <br/>NOTE: 表达式中可能存在不同类型值比较 |
 | 多列索引           | 20   | 单个索引关联了多个字段                                       | create index i_id on t1(id, age);                            |
 | 超长字段           | 20   | 超长字段的长度可能超出一页，比如常见的text,blob等。这里仅要求实现text（text 长度固定4096字节），可以当做字符串实现。<br/>注意：当前的查询，只能支持一次返回少量数据，需要扩展 | create table t(id int, age int, info text);<br/>insert into t(1,1, 'a very very long string');<br/>select * from t where id=1; |
@@ -91,9 +93,29 @@ select * form t where d=’2021-02-30‘； 这种场景在mysql下面是返回�
 
 - update 测试
 
-很多同学遇到丢数据的问题。
-
 update 也要考虑元数据校验，比如更新不存在的表、更新不存在的字段等。
 
-需要考虑不能转换的数据类型更新，比如用字符串更新整形字段。
+需要考虑不能转换的数据类型更新，比如用字符串更新整型字段。
+
+对于整数与浮点数之间的转换，不做考察。学有余力的同学，可以做一下。
+
+- 多表查询
+
+多表查询的输入SQL，只要是字段，都会带表名。比如不会存在 select id from t1,t2;
+
+不带字段名称的场景（会测试）：select * from t1,t2;
+
+带字段：select t1.id, t1.age, t2.name from t1,t2 where t1.id=t2.id;
+
+或者：select t1.* ,  t2.name from t1,t2 where t1.id=t2.id;
+
+
+
+- 聚合运算
+
+不需要考虑聚合字段与普通字段同时出现的场景。比如： select id, count(1) from t1;
+
+
+
+
 
