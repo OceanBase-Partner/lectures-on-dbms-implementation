@@ -26,5 +26,7 @@
 
 [OceanBase 大赛 github 操作手把手](miniob-github-step-by-step.md)
 
+[miniob-date 测试case解析](miniob-test-comment-date.md)
+
 [版权声明](copyright)
 
