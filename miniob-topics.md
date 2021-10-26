@@ -197,5 +197,52 @@ select count(not_exists_col) from t;
 
 
 
+- 支持NULL类型
+NULL的测试case描述的太过简单，这里做一下补充说明。
+NULL的功能在设计时，参考了mariadb的做法。包括NULL的比较规则：`任何` 值与NULL做对比，结果都是FALSE。
+
+因为miniob的特殊性，字段默认都是不能作为NULL的，所以这个测试用例中，要求增加关键字`nullable`，表示字段可以是NULL。
+
+需要考虑的场景
+- 建表
+create table t(id int, num int nullable, birthday date nullable);
+表示创建一个表t,字段num和birthday可以是NULL, 而id不能是NULL。
+
+建索引
+create index i_num on t(num);
+支持在可以为NULL的字段上建索引
+
+需要支持增删改查
+insert into t values(1, 2, '2020-01-01');
+insert into t values(1, null, null);
+insert into t values(1, null, '2020-02-02'); -- 同学们自己多考虑几种场景
+insert into t values(null, 1, '2020-01-02'); -- 应该返回FAILURE，因为ID不能是NULL
+
+select * from t; -- 全表遍历
+-- null 条件查询，同学们自己多测试几种场景
+select * from t where id is null;
+select * from t where id is not null;
+select * from t where num is null; 
+select * from t where num > null;
+select * from t where num <> null;
+select * from t where 1=null;
+select * from t where 'a'=null;
+select * from t where null = null;
+select * from t where null is null; -- 注意 = 与 is 的区别
+select * from t where '2020-01-31' is null;
+
+> 查询不要忘记多表查询
+
+聚合
+select count(\*) from t;
+select count(num) from t;
+select avg(num) from t;
+
+> 字段值是NULL时，比较特殊，不需要统计在内。如果是AVG，不会增加统计行数，也不需要默认值。
+
+
+
+
+
 
 
