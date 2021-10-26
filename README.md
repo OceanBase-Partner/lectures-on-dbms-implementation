@@ -28,5 +28,7 @@
 
 [miniob-date 测试case解析](miniob-test-comment-date.md)
 
+[miniob drop-table 实现解析](miniob-drop-table-implementation.md)
+
 [版权声明](copyright)
 
