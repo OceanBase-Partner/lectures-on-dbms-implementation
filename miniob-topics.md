@@ -42,8 +42,9 @@
 | 分组               | 20   | 支持group by功能。group by中的聚合函数也不要求支持表达式     | select t.id, t.name, avg(t.score),avg(t2.age) from t,t2 where t.id=t2.id group by t.id; |
 
 # 测试常见问题
+## 测试Case
 
-- 优化buffer pool
+### 优化buffer pool
 
 
 
@@ -53,21 +54,21 @@
 
 
 
-- basic 测试
+### basic 测试
 
 基础测试是隐藏的测试case，是代码本身就有的功能，比如创建表、插入数据等。如果选手把原生仓库代码提交上去，就能够测试通过basic。
 
-- select-meta 测试
+### select-meta 测试
 
 这个测试对应了“元数据校验”。选手们应该先做这个case。
 
 常见测试失败场景有一个是 where 条件校验时 server core了。
 
-- drop-table case测试失败
+### drop-table case测试失败
 
 目前遇到最多的失败情况是没有校验元数据，比如表删除后，再执行select，按照“元数据校验”规则，应该返回"FAILURE"。
 
-- date 测试
+### date 测试
 
 date测试需要注意校验日期有效性。比如输入"2021-2-31"，一个非法的日期，应该返回"FAILURE"。
 
@@ -79,19 +80,19 @@ select * form t where d=’2021-02-30‘； 这种场景在mysql下面是返回�
 
 > 温馨提示：date 可以使用整数存储，简化处理
 
-- 浮点数展示问题
+### 浮点数展示问题
 
 按照输出要求，浮点数最多保留两位小数，并且去掉多余的0。目前没有直接的接口能够输出这种格式。比如 printf("%.2f", f); 会输出 1.00，printf("%g", f); 虽然会删除多余的0，但是数据比较大或者小数位比较多时展示结果也不符合要求。
 
 
 
-- 浮点数与整数转换问题
+### 浮点数与整数转换问题
 
 比如 create table t(a int, b float); 在当前的实现代码中，是不支持insert into t values(1,1); 这种做法的，因为1是整数，而字段`b`是浮点数。那么，我们在比赛中，也不需要考虑这两种转换。
 
 但是有一种例外情况，比如聚合函数运算：`select avg(a) from t;`,需要考虑整数运算出来结果，是一个浮点数。
 
-- update 测试
+### update 测试
 
 update 也要考虑元数据校验，比如更新不存在的表、更新不存在的字段等。
 
@@ -141,7 +142,7 @@ update t set name='abc' where col1=0 and col2=0;
 
 
 
-- 多表查询
+### 多表查询
 
 多表查询的输入SQL，只要是字段，都会带表名。比如不会存在 select id from t1,t2;
 
@@ -157,7 +158,7 @@ update t set name='abc' where col1=0 and col2=0;
 
 
 
-- 聚合运算
+### 聚合运算
 
 不需要考虑聚合字段与普通字段同时出现的场景。比如： select id, count(1) from t1;
 
@@ -197,7 +198,7 @@ select count(not_exists_col) from t;
 
 
 
-- 支持NULL类型
+### 支持NULL类型
 NULL的测试case描述的太过简单，这里做一下补充说明。
 NULL的功能在设计时，参考了mariadb的做法。包括NULL的比较规则：`任何` 值与NULL做对比，结果都是FALSE。
 
@@ -239,10 +240,4 @@ select count(num) from t;
 select avg(num) from t;
 
 > 字段值是NULL时，比较特殊，不需要统计在内。如果是AVG，不会增加统计行数，也不需要默认值。
-
-
-
-
-
-
 
