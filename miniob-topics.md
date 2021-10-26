@@ -99,6 +99,48 @@ update 也要考虑元数据校验，比如更新不存在的表、更新不存�
 
 对于整数与浮点数之间的转换，不做考察。学有余力的同学，可以做一下。
 
+更新需要考虑的几个场景，如果这个case没有过，可以对比一下：
+
+假设存在这个表：
+
+create table t (id int, name char, col1 int, col2 int);
+
+表上有个索引
+
+create index i_id on t (id);
+
+-- 单行更新
+
+update t set name='abc' where id=1;
+
+-- 多行更新
+
+update t set name='a' where col1>2; -- 假设where条件能查出来多条数据
+
+-- 更新索引
+
+update t set id=4 where name='c';
+
+-- 全表更新
+
+update t set col1=100;
+
+-- where 条件有多个
+
+update t set name='abc' where col1=0 and col2=0;
+
+一些异常场景：
+
+- 更新不存在的表
+- 更新不存在的字段
+- 查询条件中包含不合法的字段
+- 查询条件查出来的数据集合是空（应该什么都不做，返回成功）
+- 使用无法转换的类型更新某个字段，比如使用字符串更新整型字段
+
+
+
+
+
 - 多表查询
 
 多表查询的输入SQL，只要是字段，都会带表名。比如不会存在 select id from t1,t2;
