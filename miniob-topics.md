@@ -243,7 +243,7 @@ select * from t where '2020-01-31' is null;
 聚合
 
 ```sql
-select count(\*) from t;
+select count(*) from t;
 select count(num) from t;
 select avg(num) from t;
 ```
