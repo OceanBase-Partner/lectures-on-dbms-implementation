@@ -259,3 +259,6 @@ inner-join出现非常多的一个问题就是下面的语句，返回了空数�
 ```sql
 select * from join_table_large_1 inner join join_table_large_2 on join_table_large_1.id=join_table_large_2.id inner join join_table_large_3 on join_table_large_1.id=join_table_large_3.id inner join join_table_large_4 on join_table_large_3.id=join_table_large_4.id inner join join_table_large_5 on 1=1 inner join join_table_large_6 on join_table_large_5.id=join_table_large_6.id where join_table_large_3.num3 <10 and join_table_large_5.num5>90;
 ```
+
+### 表达式
+表达式需要考虑整数和浮点数的比较。比如 t.id > 1.1 或者 5/4 = 1等。
