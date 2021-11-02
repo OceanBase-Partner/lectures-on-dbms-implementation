@@ -250,3 +250,12 @@ select avg(num) from t;
 
 > 字段值是NULL时，比较特殊，不需要统计在内。如果是AVG，不会增加统计行数，也不需要默认值。
 
+
+### inner-join 
+
+inner-join 与 多表查询类似，很多同学做完多表查询就开始做inner-join了。
+inner-join出现非常多的一个问题就是下面的语句，返回了空数据，或者没有任何返回，可能是测试时程序coredump，或者长时间没有返回结果，比如死循环。测试语句是：
+
+```sql
+select * from join_table_large_1 inner join join_table_large_2 on join_table_large_1.id=join_table_large_2.id inner join join_table_large_3 on join_table_large_1.id=join_table_large_3.id inner join join_table_large_4 on join_table_large_3.id=join_table_large_4.id inner join join_table_large_5 on 1=1 inner join join_table_large_6 on join_table_large_5.id=join_table_large_6.id where join_table_large_3.num3 <10 and join_table_large_5.num5>90;
+```
