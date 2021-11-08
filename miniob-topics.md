@@ -35,11 +35,11 @@
 | 支持NULL类型<br>null | 10   | 包括但不限于建表、查询和插入。默认情况不允许为NULL，使用nullable关键字表示字段允许为NULL。<br/>Null不区分大小写。<br/>注意NULL字段的对比规则是NULL与**任何** 数据对比，都是FALSE。 | create table t1 (id int not null, age int not null, address nullable); create table t1 (id int, age int, address char nullable); insert into t1 values(1,1, null); |
 | 简单子查询<br>simple-sub-query | 10   | 支持简单的IN(NOT IN)语句；<br/>支持与子查询结果做比较运算；<br/>支持子查询中带聚合函数。<br/>子查询中不会与主查询做关联。 | select * from t1 where name in(select name from t2);<br/>select * from t1 where t1.age >(select max(t2.age) from t2);<br/>select * from t1 where t1.age > (select avg(t2.age) from t2) and t1.age > 20.0; <br/>NOTE: 表达式中可能存在不同类型值比较 |
 | 多列索引<br>multi-index | 20   | 单个索引关联了多个字段                                       | create index i_id on t1(id, age);                            |
-| 超长字段<br>text   | 20   | 超长字段的长度可能超出一页，比如常见的text,blob等。这里仅要求实现text（text 长度固定4096字节），可以当做字符串实现。<br/>注意：当前的查询，只能支持一次返回少量数据，需要扩展 | create table t(id int, age int, info text);<br/>insert into t values(1,1, 'a very very long string');<br/>select * from t where id=1; |
+| 超长字段<br>text   | 20   | 超长字段的长度可能超出一页，比如常见的text,blob等。这里仅要求实现text（text 长度固定4096字节），可以当做字符串实现。<br/>注意：当前的查询，只能支持一次返回少量数据，需要扩展<br>如果输入的字符串长度，超过4096，那么应该保存4096字节，剩余的数据截断 | create table t(id int, age int, info text);<br/>insert into t values(1,1, 'a very very long string');<br/>select * from t where id=1; |
 | 查询支持表达式<br>expression | 20   | 查询中支持运算表达式，这里的运算表达式包括 +-*/。<br/>仅支持基本数据的运算即可，不对date字段做考察。<br/>运算出现异常，按照NULL规则处理。<br/>只需要考虑select。 | select * from t1,t2 where t1.age +10 > t2.age *2 + 3-(t1.age +10)/3;<br/>select t1.col1+t2.col2 from t1,t2 where t1.age +10 > t2.age *2 + 3-(t1.age +10)/3; |
-| 复杂子查询<br>complex-sub-query | 20   | 子查询在WHERE条件中，子查询语句支持多张表与AND条件表达式，查询条件支持max/min等 | select * from t1 where age in (select id from t2 where t2.name in (select name from t3)) |
+| 复杂子查询<br>complex-sub-query | 20   | 子查询在WHERE条件中，子查询语句支持多张表与AND条件表达式，查询条件支持max/min等。<br>注意考虑一下子查询与父表相关联的情况。 | select * from t1 where age in (select id from t2 where t2.name in (select name from t3)) |
 | 排序<br>order-by   | 10   | 支持oder by功能。不指定排序顺序默认为升序(asc)。<br/>不需要支持oder by字段为数字的情况，比如select * from t order by 1; | select * from t,t1 where t.id=t1.id order by t.id asc,t1.score desc; |
-| 分组<br>group-b   | 20   | 支持group by功能。group by中的聚合函数也不要求支持表达式     | select t.id, t.name, avg(t.score),avg(t2.age) from t,t2 where t.id=t2.id group by t.id,t.name; |
+| 分组<br>group-by  | 20   | 支持group by功能。group by中的聚合函数也不要求支持表达式     | select t.id, t.name, avg(t.score),avg(t2.age) from t,t2 where t.id=t2.id group by t.id,t.name; |
 
 # 测试常见问题
 ## 测试Case
