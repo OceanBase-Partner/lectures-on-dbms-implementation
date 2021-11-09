@@ -30,6 +30,8 @@
 
 [miniob-date 实现解析](miniob-date-implementation.md)
 
+[miniob select-meta 实现解析](miniob-select-meta-implementation.md)
+
 [miniob drop-table 实现解析](miniob-drop-table-implementation.md)
 
 [miniob select-tables 实现解析](miniob-select-tables-implementation.md)
